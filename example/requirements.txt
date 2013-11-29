@@ -1,0 +1,2 @@
+Django==1.6.0
+django-admin2==0.6.0rc1

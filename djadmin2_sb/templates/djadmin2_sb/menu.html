@@ -1,0 +1,31 @@
+{% load admin2_tags %}
+          <ul class="nav navbar-nav side-nav">
+            {% comment %}
+            {% menuentry "admin2:dashboard" %}<i class="fa fa-dashboard"></i> Dashboard</a>{% endmenuentry %}
+            {% menuentry "admin2:app_index" "blog"%}<i class="fa fa-font"></i> Blog{% endmenuentry %}
+            <li><a href="#"><i class="fa fa-desktop"></i> Case studies</a></li>
+            <li><a href="#"><i class="fa fa-wrench"></i> Settings</a></li>
+            {% menuentry 'admin2:auth_user_index' %}<i class="fa fa-table"></i> Users{% endmenuentry %}
+            {% menuentry 'admin2:logout' %}<i class="fa fa-power-off"></i> Logout{% endmenuentry %}
+            {% endcomment %}
+            {% for app_label, registry in apps.items %}
+            <li class="dropdown user-dropdown">
+              {% with app_verbose_names|verbose_name_for:app_label as verbose_name %}
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>
+                {% firstof verbose_name app_label|title %}
+                <b class="caret"></b>
+              </a>
+              {% endwith %}
+              <ul class="dropdown-menu">
+                {% for model_class, model_admin in registry.items %}
+                {% with permissions|for_admin:model_admin as permissions %}
+                  {% if permissions.has_view_permission or permissions.has_add_permission or permissions.has_change_permission %}
+                  <li><a href="{{ model_admin.get_index_url }}">{{ model_admin.verbose_name_plural|title }}</a></li>
+                  {% endif %}
+                {% endwith %}
+                {% endfor %}
+              </ul>
+            </li>
+            {% endfor %}
+          </ul>
+

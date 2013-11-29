@@ -1,0 +1,16 @@
+{% load admin2_tags i18n %}
+<div class="row">
+  <div class="col-lg-12 save_btns">
+      {% if object %}
+      <a class="btn btn-small btn-danger" href="{% url view|admin2_urlname:'delete' pk=object.pk %}">
+        <i class="fa fa-trash-o"></i>
+        {% trans "Delete" %}
+      </a>
+      {% endif %}
+      <div class="pull-right">
+        <button class="btn btn-small btn-default" type="submit" name="_addanother">{% trans "Save and add another" %}</button>
+        <button class="btn btn-small btn-default" type="submit" name="_continue">{% trans "Save and continue editing" %}</button>
+        <button class="btn btn-small btn-success" type="submit" name="_save"><i class="fa fa-save"></i> {% trans "Save" %}</button>
+      </div>
+    </div>
+</div>
